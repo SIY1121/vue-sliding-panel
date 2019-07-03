@@ -10,6 +10,7 @@
       ></div>
     </transition>
     <section
+      ref="panel"
       @touchstart.prevent="onTouchStart"
       @touchmove.prevent="onTouchMove"
       @touchend.prevent="onTouchEnd"
@@ -18,7 +19,10 @@
       class="sliding-panel"
       :class="{ transition: state !== 'dragging' }"
     >
-      <slot class="sliding-panel-slot" :class="slotClass" v-bind:state="state" />
+      <slot name="handle" v-bind:state="state" />
+      <section class="sliding-panel-slot" :class="slotClass">
+        <slot v-bind:state="state" />
+      </section>
     </section>
   </section>
 </template>
@@ -29,29 +33,39 @@ import { Gravity, PanelState } from '@/types'
 
 @Component
 export default class HelloWorld extends Vue {
-  @Prop({ default: PanelState.COLLAPSED }) public state!: PanelState
-  @Prop({ default: Gravity.BOTTOM }) public gravity!: Gravity
-  @Prop({ default: '4rem' }) public collapsedOffset!: any
-  @Prop({ default: '0' }) public offset!: any
-  @Prop({ default: true }) public scrim!: boolean
-  @Prop({ default: 'rgba(0,0,0,.5)' }) public scrimColor!: string
-  @Prop({ default: PanelState.COLLAPSED }) public dismissedState!: PanelState
-  @Prop({
-    default: 0.5,
-    validator: (value: number) => 0 <= value && value <= 1
-  })
+  @Prop({ default: PanelState.COLLAPSED })
+  public state!: PanelState
+
+  @Prop({ default: Gravity.BOTTOM })
+  public gravity!: Gravity
+
+  @Prop({ default: '4rem' })
+  public collapsedOffset!: any
+
+  @Prop({ default: '0' })
+  public offset!: any
+
+  @Prop({ default: true })
+  public scrim!: boolean
+
+  @Prop({ default: 'rgba(0,0,0,.5)' })
+  public scrimColor!: string
+
+  @Prop({ default: PanelState.COLLAPSED })
+  public dismissedState!: PanelState
+
+  @Prop({ default: 0.5, validator: (value: number) => 0 <= value && value <= 1 })
   public anchorPosition!: number
 
-  @Prop({ default: false }) public anchorEnabled!: boolean
+  @Prop({ default: false })
+  public anchorEnabled!: boolean
 
   /////////temporary variables
   private oldOffset: number = 0
   private touchStartPosition: number = 0
   private draggingOffset: number = 0
-  private tmpSlideOffset: number = 0
+  private oldState: PanelState = PanelState.HIDDEN
   /////////
-
-  private currentOffset: string = '0'
 
   mounted() {
     if (this.offset == 0)
@@ -67,45 +81,37 @@ export default class HelloWorld extends Vue {
   }
 
   get styles(): any {
-    let hiddenOffset: '100vh' | '100vw'
-    let size: 'width' | 'height' = 'width'
-    const returns: any = {}
-    const anchor: string = this.gravity
+    const styleObject: any = {}
+    const anchor: string = this.gravity //'top' 'right' 'bottom' or 'left'
 
     switch (this.gravity) {
       case Gravity.TOP:
       case Gravity.BOTTOM:
-        hiddenOffset = '100vh'
-        size = 'height'
+        styleObject.height = this.offset
         break
       case Gravity.LEFT:
       case Gravity.RIGHT:
-        hiddenOffset = '100vw'
-        size = 'width'
+        styleObject.width = this.offset
     }
+
     switch (this.state) {
       case PanelState.HIDDEN:
-        this.currentOffset = `calc(${this.offset} * -1)`
+        styleObject[anchor] = `calc(${this.offset} * -1)`
         break
       case PanelState.COLLAPSED:
-        this.currentOffset = `calc(${this.offset} * -1 + ${this.collapsedOffset})`
+        styleObject[anchor] = `calc(${this.offset} * -1 + ${this.collapsedOffset})`
         break
       case PanelState.ANCHORED:
-        this.currentOffset = `calc(${this.offset} * -1 + ${this.offset} * ${this.anchorPosition})`
+        styleObject[anchor] = `calc(${this.offset} * -1 + ${this.offset} * ${this.anchorPosition})`
         if (this.anchorEnabled) break
       // eslint-disable-next-line no-fallthrough
       case PanelState.EXPANDED:
-        this.currentOffset = `0`
+        styleObject[anchor] = `0`
         break
       case PanelState.DRAGGING:
-        returns[size] = this.offset
-        returns[anchor] = `${this.draggingOffset}px`
-        return returns
+        styleObject[anchor] = `${this.draggingOffset}px`
     }
-
-    returns[size] = this.offset
-    returns[anchor] = this.currentOffset
-    return returns
+    return styleObject
   }
 
   get isScrimVisible() {
@@ -120,10 +126,13 @@ export default class HelloWorld extends Vue {
     this.$emit('update:state', this.dismissedState)
   }
 
+  /**
+   * init temporary variables
+   */
   onTouchStart(e: TouchEvent) {
-    console.log('start')
+    this.oldState = this.state
     this.$emit('update:state', PanelState.DRAGGING)
-    const target = e.target as HTMLElement
+    const target = this.$refs.panel as HTMLElement
     switch (this.gravity) {
       case Gravity.TOP:
         this.touchStartPosition = e.targetTouches[0].screenY
@@ -144,41 +153,33 @@ export default class HelloWorld extends Vue {
     this.draggingOffset = this.oldOffset
   }
 
+  /**
+   * calculate and update position
+   */
   onTouchMove(e: TouchEvent) {
-    console.log('move')
     switch (this.gravity) {
       case Gravity.TOP:
-        this.draggingOffset = Math.min(
-          this.oldOffset + (e.targetTouches[0].screenY - this.touchStartPosition),
-          0
-        )
-        this.tmpSlideOffset =
-          1 - Math.abs(this.draggingOffset) / (e.target as HTMLElement).clientHeight
+        this.draggingOffset = Math.min(this.oldOffset + (e.targetTouches[0].screenY - this.touchStartPosition), 0)
         break
       case Gravity.BOTTOM:
-        this.draggingOffset = Math.min(
-          this.oldOffset + (e.targetTouches[0].screenY - this.touchStartPosition) * -1,
-          0
-        )
+        this.draggingOffset = Math.min(this.oldOffset + (e.targetTouches[0].screenY - this.touchStartPosition) * -1, 0)
         break
       case Gravity.LEFT:
-        this.draggingOffset = Math.min(
-          this.oldOffset + (e.targetTouches[0].screenX - this.touchStartPosition),
-          0
-        )
+        this.draggingOffset = Math.min(this.oldOffset + (e.targetTouches[0].screenX - this.touchStartPosition), 0)
         break
       case Gravity.RIGHT:
-        this.draggingOffset = Math.min(
-          this.oldOffset + (e.targetTouches[0].screenX - this.touchStartPosition) * -1,
-          0
-        )
+        this.draggingOffset = Math.min(this.oldOffset + (e.targetTouches[0].screenX - this.touchStartPosition) * -1, 0)
     }
   }
 
+  /**
+   * snap to closest position
+   */
   onTouchEnd(e: TouchEvent) {
-    const target = e.target as HTMLElement
+    const target = this.$refs.panel as HTMLElement
     let offsetInPixel = 0
     let draggingOffsetEnd = 0
+
     switch (this.gravity) {
       case Gravity.TOP:
       case Gravity.BOTTOM:
@@ -191,23 +192,68 @@ export default class HelloWorld extends Vue {
         draggingOffsetEnd = this.draggingOffset + offsetInPixel
     }
 
-    if (this.anchorEnabled && offsetInPixel * (this.anchorPosition * 1.5) < draggingOffsetEnd) {
-      this.$emit('update:state', PanelState.EXPANDED)
-    } else if (
-      this.anchorEnabled &&
-      offsetInPixel * (this.anchorPosition * 1.5) > draggingOffsetEnd &&
-      offsetInPixel * (this.anchorPosition * 0.5) < draggingOffsetEnd
-    ) {
-      this.$emit('update:state', PanelState.ANCHORED)
-    } else if (draggingOffsetEnd >= offsetInPixel * 0.5) {
-      this.$emit('update:state', PanelState.EXPANDED)
-    } else if (draggingOffsetEnd < offsetInPixel * 0.5) {
-      this.$emit('update:state', this.dismissedState)
+    // TODO: remove duplicated code
+    // optimize threshold by oldState
+    // e.g. Collapsed panel should be easy to expand
+    switch (this.oldState) {
+      case PanelState.COLLAPSED:
+        if (
+          this.anchorEnabled &&
+          offsetInPixel * (this.anchorPosition + (1 - this.anchorPosition) * 0.5) < draggingOffsetEnd
+        ) {
+          this.$emit('update:state', PanelState.EXPANDED)
+        } else if (
+          this.anchorEnabled &&
+          offsetInPixel * (this.anchorPosition + (1 - this.anchorPosition) * 0.5) > draggingOffsetEnd &&
+          offsetInPixel * (this.anchorPosition * 0.1) < draggingOffsetEnd
+        ) {
+          this.$emit('update:state', PanelState.ANCHORED)
+        } else if (draggingOffsetEnd >= offsetInPixel * 0.1) {
+          this.$emit('update:state', PanelState.EXPANDED)
+        } else if (draggingOffsetEnd < offsetInPixel * 0.1) {
+          this.$emit('update:state', this.dismissedState)
+        }
+        break
+      case PanelState.ANCHORED:
+        if (
+          this.anchorEnabled &&
+          offsetInPixel * (this.anchorPosition + (1 - this.anchorPosition) * 0.1) < draggingOffsetEnd
+        ) {
+          this.$emit('update:state', PanelState.EXPANDED)
+        } else if (
+          this.anchorEnabled &&
+          offsetInPixel * (this.anchorPosition + (1 - this.anchorPosition) * 0.1) > draggingOffsetEnd &&
+          offsetInPixel * (this.anchorPosition * 0.9) < draggingOffsetEnd
+        ) {
+          this.$emit('update:state', PanelState.ANCHORED)
+        } else if (draggingOffsetEnd >= offsetInPixel * 0.5) {
+          this.$emit('update:state', PanelState.EXPANDED)
+        } else if (draggingOffsetEnd < offsetInPixel * 0.5) {
+          this.$emit('update:state', this.dismissedState)
+        }
+        break
+      case PanelState.EXPANDED:
+        if (
+          this.anchorEnabled &&
+          offsetInPixel * (this.anchorPosition + (1 - this.anchorPosition) * 0.9) < draggingOffsetEnd
+        ) {
+          this.$emit('update:state', PanelState.EXPANDED)
+        } else if (
+          this.anchorEnabled &&
+          offsetInPixel * (this.anchorPosition + (1 - this.anchorPosition) * 0.9) > draggingOffsetEnd &&
+          offsetInPixel * (this.anchorPosition * 0.5) < draggingOffsetEnd
+        ) {
+          this.$emit('update:state', PanelState.ANCHORED)
+        } else if (draggingOffsetEnd >= offsetInPixel * 0.9) {
+          this.$emit('update:state', PanelState.EXPANDED)
+        } else if (draggingOffsetEnd < offsetInPixel * 0.9) {
+          this.$emit('update:state', this.dismissedState)
+        }
+        break
     }
   }
 
   onClick() {
-    console.log('onclick')
     if (this.state === PanelState.COLLAPSED)
       this.$emit('update:state', this.anchorEnabled ? PanelState.ANCHORED : PanelState.EXPANDED)
     else if (this.state === PanelState.ANCHORED) this.$emit('update:state', PanelState.EXPANDED)

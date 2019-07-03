@@ -1,9 +1,13 @@
-import { Gravity } from './types' import { PanelState } from './types'
 <template>
   <div id="app">
     <img alt="Vue logo" src="./assets/logo.png" />
-    <SlidingPanel :state.sync="state" :gravity="gravity" v-slot="state">
-      {{ state }}
+    <SlidingPanel :state.sync="state" :gravity="gravity">
+      <template v-slot:handle="state">
+        <div style="position:relative;top:-2rem">Handle</div>
+      </template>
+      <template v-slot:default="state">
+        {{ state }}
+      </template>
     </SlidingPanel>
   </div>
 </template>
@@ -20,7 +24,7 @@ import { Gravity, PanelState } from '@/types'
 })
 export default class App extends Vue {
   state: PanelState = PanelState.COLLAPSED
-  gravity: Gravity = Gravity.TOP
+  gravity: Gravity = Gravity.BOTTOM
 }
 </script>
 
