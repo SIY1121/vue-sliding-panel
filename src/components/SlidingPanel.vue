@@ -32,7 +32,7 @@ import { Component, Prop, Vue } from 'vue-property-decorator'
 import { Gravity, PanelState } from '@/types'
 
 @Component
-export default class HelloWorld extends Vue {
+export default class SlidingPanel extends Vue {
   @Prop({ default: PanelState.COLLAPSED })
   public state!: PanelState
 
