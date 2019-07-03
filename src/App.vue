@@ -1,13 +1,8 @@
 <template>
   <div id="app">
     <img alt="Vue logo" src="./assets/logo.png" />
-    <SlidingPanel :state.sync="state" :gravity="gravity">
-      <template v-slot:handle="state">
-        <div style="position:relative;top:-2rem">Handle</div>
-      </template>
-      <template v-slot:default="state">
-        {{ state }}
-      </template>
+    <SlidingPanel :state.sync="state" :gravity="gravity" dismissedState="hidden" v-slot:default="state">
+      <div>{{ state }}</div>
     </SlidingPanel>
   </div>
 </template>

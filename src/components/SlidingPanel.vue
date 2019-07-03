@@ -1,3 +1,4 @@
+import { PanelState } from '../types'
 <template>
   <section>
     <transition name="fade">
@@ -19,7 +20,6 @@
       class="sliding-panel"
       :class="{ transition: state !== 'dragging' }"
     >
-      <slot name="handle" v-bind:state="state" />
       <section class="sliding-panel-slot" :class="slotClass">
         <slot v-bind:state="state" />
       </section>
@@ -33,7 +33,7 @@ import { Gravity, PanelState } from '@/types'
 
 @Component
 export default class SlidingPanel extends Vue {
-  @Prop({ default: PanelState.COLLAPSED })
+  @Prop({ required: true })
   public state!: PanelState
 
   @Prop({ default: Gravity.BOTTOM })
@@ -196,6 +196,7 @@ export default class SlidingPanel extends Vue {
     // optimize threshold by oldState
     // e.g. Collapsed panel should be easy to expand
     switch (this.oldState) {
+      case PanelState.HIDDEN:
       case PanelState.COLLAPSED:
         if (
           this.anchorEnabled &&
@@ -265,7 +266,6 @@ export default class SlidingPanel extends Vue {
 <style lang="scss" scoped>
 .sliding-panel {
   position: fixed;
-  background: white;
   .sliding-panel-slot {
     &.ud {
       width: 100%;

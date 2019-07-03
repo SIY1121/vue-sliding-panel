@@ -1,7 +1,7 @@
 {
   "name": "vue-sliding-panel",
-  "version": "0.0.1",
-  "private": true,
+  "version": "0.0.2",
+  "private": false,
   "main":"dist/vue-sliding-panel.common.js",
   "license": "Apache-2.0",
   "author": "SIY1121",
