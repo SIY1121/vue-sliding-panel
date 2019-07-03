@@ -1,9 +1,9 @@
 export enum PanelState {
-  HIDDEN,
-  COLLAPSED,
-  ANCHORED,
-  EXPANDED,
-  DRAGGING
+  HIDDEN = 'hidden',
+  COLLAPSED = 'collapsed',
+  ANCHORED = 'anchored',
+  EXPANDED = 'expanded',
+  DRAGGING = 'dragging'
 }
 
 export enum Gravity {
