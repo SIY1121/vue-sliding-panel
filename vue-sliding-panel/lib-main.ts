@@ -1,4 +1,5 @@
-import panel from './components/SlidingPanel.vue'
+// @ts-ignore
+import panel from './SlidingPanel.vue'
 import Vue from 'vue'
 import { PluginObject } from 'vue'
 
@@ -11,3 +12,4 @@ const plugin: PluginObject<any> = {
 export default plugin
 
 export const SlidingPanel = panel
+export { PanelState, Gravity } from './types'

@@ -2,6 +2,8 @@
   "compilerOptions": {
     "target": "esnext",
     "module": "esnext",
+    "declaration": true,
+    "emitDeclarationOnly": true,
     "strict": true,
     "jsx": "preserve",
     "importHelpers": true,
@@ -9,8 +11,9 @@
     "experimentalDecorators": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "sourceMap": true,
+    "sourceMap": false,
     "baseUrl": ".",
+    "outDir": "../dist/types/",
     "types": [
       "webpack-env",
       "jest"
@@ -31,14 +34,9 @@
     ]
   },
   "include": [
-    "docs/**/*.ts",
-    "docs/**/*.tsx",
-    "docs/**/*.vue",
-    "vue-sliding-panel/**/*.ts",
-    "vue-sliding-panel/**/*.tsx",
-    "vue-sliding-panel/**/*.vue",
-    "tests/**/*.ts",
-    "tests/**/*.tsx"
+    "./**/*.ts",
+    "./**/*.tsx",
+    "./**/*.vue"
   ],
   "exclude": [
     "node_modules"

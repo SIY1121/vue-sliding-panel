@@ -29,7 +29,7 @@ import { PanelState } from '../types'
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
-import { Gravity, PanelState } from '@/types'
+import { PanelState, Gravity } from './types'
 
 @Component
 export default class SlidingPanel extends Vue {
