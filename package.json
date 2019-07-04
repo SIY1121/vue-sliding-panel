@@ -7,7 +7,7 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "build-bundle": "vue-cli-service build --target lib --name vue-sliding-panel vue-sliding-panel/lib-main.ts",
+    "build-bundle": "vue-cli-service build --target lib --name vue-sliding-panel vue-sliding-panel/lib-main.ts && tsc --project ./vue-sliding-panel --emitDeclarationOnly --declaration",
     "test:unit": "vue-cli-service test:unit"
   },
   "main": "dist/vue-sliding-panel.common.js",

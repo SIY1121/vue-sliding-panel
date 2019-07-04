@@ -2,8 +2,6 @@
   "compilerOptions": {
     "target": "esnext",
     "module": "esnext",
-    "declaration": true,
-    "emitDeclarationOnly": true,
     "strict": true,
     "jsx": "preserve",
     "importHelpers": true,
