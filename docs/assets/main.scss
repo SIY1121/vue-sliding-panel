@@ -1,7 +1,15 @@
 @import 'reset';
+@import url('https://fonts.googleapis.com/css?family=Noto+Sans+JP:400,700&display=swap');
+
+$text-color: #555;
+
+$primary: #20bdff;
+$secondly: #3efe8e;
 
 $pc: 1024px;
 $tab: 768px;
+
+$navbar-height: 5rem;
 
 @mixin pc {
   @media (min-width: ($pc)) {
@@ -9,12 +17,61 @@ $tab: 768px;
   }
 }
 @mixin tab {
-  @media (min-width: ($tab)) {
+  @media (max-width: ($pc)) {
     @content;
   }
 }
 @mixin sp {
-  @media (max-width: ($sp)) {
+  @media (max-width: ($tab)) {
     @content;
   }
+}
+
+html,body {
+  font-family: 'Noto Sans JP', sans-serif;
+  color: $text-color;
+}
+
+@mixin container {
+  padding: 1rem;
+  margin: 0 auto;
+  @include pc {
+    width: $pc;
+  }
+  @include tab {
+    width: $tab;
+  }
+  @include sp {
+    width: 100%;
+  }
+}
+
+.button {
+  display: inline-block;
+  padding: 1rem;
+  margin: 0.5rem;
+  border: none;
+  outline: none;
+  border-radius: 0.3rem;
+  background: white;
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,.1));
+  text-decoration: none;
+  transition: all 0.3s ease;
+  &:hover {
+    filter: drop-shadow(0 1px 2px rgba(0,0,0,.3));
+    transform: translateY(4px);
+  }
+  &.primary {
+    color: $primary;
+  }
+  &.secondly {
+    color: $secondly;
+  }
+}
+
+.document-root {
+  @include pc {
+    margin-left: 350px;
+  }
+  padding: 1rem;
 }

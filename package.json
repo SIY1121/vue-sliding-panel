@@ -1,25 +1,26 @@
 {
   "name": "vue-sliding-panel",
-  "version": "0.0.3",
+  "version": "0.0.42",
   "private": false,
   "author": "SIY1121",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "build-bundle": "vue-cli-service build --target lib --name vue-sliding-panel vue-sliding-panel/lib-main.ts && tsc --project ./vue-sliding-panel --emitDeclarationOnly --declaration",
+    "build-bundle": "vue-cli-service build --target lib --name vue-sliding-panel vue-sliding-panel/index.ts && tsc --project ./vue-sliding-panel --emitDeclarationOnly --declaration",
     "test:unit": "vue-cli-service test:unit"
   },
   "main": "dist/vue-sliding-panel.common.js",
-  "types": "dist/types/lib-main.ts",
+  "types": "dist/types/index.d.ts",
   "files": [
     "dist"
   ],
-  "dependencies": {
-    "vue-router": "^3.0.3"
-  },
+  "dependencies": {},
   "devDependencies": {
+    "@mdi/font": "^3.7.95",
+    "@types/highlight.js": "^9.12.3",
     "@types/jest": "^23.1.4",
+    "@types/node": "^12.0.12",
     "@vue/cli-plugin-babel": "^3.8.0",
     "@vue/cli-plugin-eslint": "^3.8.0",
     "@vue/cli-plugin-typescript": "^3.8.0",
@@ -35,6 +36,7 @@
     "eslint-import-resolver-alias": "^1.1.2",
     "eslint-plugin-import": "^2.18.0",
     "eslint-plugin-vue": "^5.0.0",
+    "highlight.js": "^9.15.8",
     "lint-staged": "^8.1.5",
     "sass": "^1.18.0",
     "sass-loader": "^7.1.0",
@@ -42,7 +44,9 @@
     "typescript": "^3.4.3",
     "vue": "^2.6.10",
     "vue-class-component": "^7.0.2",
+    "vue-highlight.js": "^3.1.0",
     "vue-property-decorator": "^8.1.0",
+    "vue-router": "^3.0.3",
     "vue-template-compiler": "^2.6.10"
   },
   "gitHooks": {

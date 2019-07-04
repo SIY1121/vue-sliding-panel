@@ -1,4 +1,3 @@
-import { PanelState } from '../types'
 <template>
   <section>
     <transition name="fade">
@@ -12,9 +11,9 @@ import { PanelState } from '../types'
     </transition>
     <section
       ref="panel"
-      @touchstart.prevent="onTouchStart"
+      @touchstart="onTouchStart"
       @touchmove.prevent="onTouchMove"
-      @touchend.prevent="onTouchEnd"
+      @touchend="onTouchEnd"
       @click="onClick"
       :style="styles"
       class="sliding-panel"
@@ -76,7 +75,7 @@ export default class SlidingPanel extends Vue {
           break
         case Gravity.LEFT:
         case Gravity.RIGHT:
-          this.offset = '90vw'
+          this.offset = '80vw'
       }
   }
 
@@ -242,7 +241,7 @@ export default class SlidingPanel extends Vue {
         } else if (
           this.anchorEnabled &&
           offsetInPixel * (this.anchorPosition + (1 - this.anchorPosition) * 0.9) > draggingOffsetEnd &&
-          offsetInPixel * (this.anchorPosition * 0.5) < draggingOffsetEnd
+          offsetInPixel * (this.anchorPosition * 0.9) < draggingOffsetEnd
         ) {
           this.$emit('update:state', PanelState.ANCHORED)
         } else if (draggingOffsetEnd >= offsetInPixel * 0.9) {
@@ -268,14 +267,14 @@ export default class SlidingPanel extends Vue {
   position: fixed;
   .sliding-panel-slot {
     &.ud {
-      width: 100%;
-      min-height: 100%;
-      overflow-y: scroll;
+      /*width: 100%;*/
+      /*min-height: 100%;*/
+      /*overflow-y: scroll;*/
     }
     &.lr {
-      height: 100%;
-      min-width: 100%;
-      overflow-x: scroll;
+      /*height: 100%;*/
+      /*min-width: 100%;*/
+      /*overflow-x: scroll;*/
     }
   }
   &.transition {
@@ -295,7 +294,8 @@ export default class SlidingPanel extends Vue {
 .fade-leave-active {
   transition: opacity 0.3s;
 }
-.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+.fade-enter,
+.fade-leave-to {
   opacity: 0;
 }
 </style>
