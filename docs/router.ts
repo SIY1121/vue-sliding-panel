@@ -25,6 +25,11 @@ export default new Router({
       path: '/examples/ShareComponent',
       name: 'sharecomponent',
       component: () => import('./views/examples/ShareComponent.vue')
+    },
+    {
+      path: '/examples/SideBar',
+      name: 'sidebar',
+      component: () => import('./views/examples/SideBar.vue')
     }
   ]
 })

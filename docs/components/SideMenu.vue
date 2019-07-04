@@ -29,9 +29,9 @@
       <router-link to="/examples/ShareComponent" class="item">
         Share component
       </router-link>
-      <div class="item">
-        Navigation bar
-      </div>
+      <router-link to="/examples/SideBar" class="item">
+        SideBar
+      </router-link>
     </section>
   </section>
 </template>
@@ -53,6 +53,7 @@ export default class SideMenu extends Vue {}
   margin: 2rem 0 1rem 0;
 }
 .item {
+  display: block;
   padding-left: 1rem;
   margin: 1rem 0;
 }

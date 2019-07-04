@@ -2,6 +2,7 @@
   <section class="document-root">
     <button class="button" @click="onClick">SHARE</button>
     <sliding-panel
+      class="share"
       :state.sync="state"
       :dismissedState="dismissedState"
       :anchorEnabled="true"
@@ -47,7 +48,7 @@ export default class ShareComponent extends Vue {
 </script>
 
 <style lang="scss">
-.sliding-panel {
+.share .sliding-panel {
   background: white;
   width: 100%;
   left: 0;
