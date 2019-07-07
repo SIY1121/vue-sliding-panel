@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <section class="document-root">
     <button class="button" @click="onClick">OPEN</button>
     <sliding-panel
       class="sidebar"

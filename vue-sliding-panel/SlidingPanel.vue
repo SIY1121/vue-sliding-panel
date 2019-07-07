@@ -19,9 +19,7 @@
       class="sliding-panel"
       :class="{ transition: state !== 'dragging' }"
     >
-      <section class="sliding-panel-slot" :class="slotClass">
-        <slot v-bind:state="state" />
-      </section>
+      <slot />
     </section>
   </section>
 </template>
@@ -59,6 +57,9 @@ export default class SlidingPanel extends Vue {
   @Prop({ default: false })
   public anchorEnabled!: boolean
 
+  @Prop({ default: true })
+  public touchEnabled!: boolean
+
   /////////temporary variables
   private oldOffset: number = 0
   private touchStartPosition: number = 0
@@ -79,6 +80,9 @@ export default class SlidingPanel extends Vue {
       }
   }
 
+  /**
+   * generate style based on the current state
+   */
   get styles(): any {
     const styleObject: any = {}
     const anchor: string = this.gravity //'top' 'right' 'bottom' or 'left'
@@ -117,10 +121,6 @@ export default class SlidingPanel extends Vue {
     return this.scrim && !(this.state === PanelState.HIDDEN || this.state === PanelState.COLLAPSED)
   }
 
-  get slotClass() {
-    return this.gravity === Gravity.TOP || this.gravity === Gravity.BOTTOM ? 'ud' : 'lr'
-  }
-
   dismiss() {
     this.$emit('update:state', this.dismissedState)
   }
@@ -129,6 +129,8 @@ export default class SlidingPanel extends Vue {
    * init temporary variables
    */
   onTouchStart(e: TouchEvent) {
+    if (!this.touchEnabled) return
+
     this.oldState = this.state
     this.$emit('update:state', PanelState.DRAGGING)
     const target = this.$refs.panel as HTMLElement
@@ -156,6 +158,8 @@ export default class SlidingPanel extends Vue {
    * calculate and update position
    */
   onTouchMove(e: TouchEvent) {
+    if (!this.touchEnabled) return
+
     switch (this.gravity) {
       case Gravity.TOP:
         this.draggingOffset = Math.min(this.oldOffset + (e.targetTouches[0].screenY - this.touchStartPosition), 0)
@@ -175,6 +179,8 @@ export default class SlidingPanel extends Vue {
    * snap to closest position
    */
   onTouchEnd(e: TouchEvent) {
+    if (!this.touchEnabled) return
+
     const target = this.$refs.panel as HTMLElement
     let offsetInPixel = 0
     let draggingOffsetEnd = 0
@@ -254,6 +260,8 @@ export default class SlidingPanel extends Vue {
   }
 
   onClick() {
+    if (!this.touchEnabled) return
+
     if (this.state === PanelState.COLLAPSED)
       this.$emit('update:state', this.anchorEnabled ? PanelState.ANCHORED : PanelState.EXPANDED)
     else if (this.state === PanelState.ANCHORED) this.$emit('update:state', PanelState.EXPANDED)
@@ -265,22 +273,11 @@ export default class SlidingPanel extends Vue {
 <style lang="scss" scoped>
 .sliding-panel {
   position: fixed;
-  .sliding-panel-slot {
-    &.ud {
-      /*width: 100%;*/
-      /*min-height: 100%;*/
-      /*overflow-y: scroll;*/
-    }
-    &.lr {
-      /*height: 100%;*/
-      /*min-width: 100%;*/
-      /*overflow-x: scroll;*/
-    }
-  }
   &.transition {
     transition: all 0.3s cubic-bezier(0, 0, 0.05, 1) 0s;
   }
 }
+
 .scrim {
   position: fixed;
   top: 0;

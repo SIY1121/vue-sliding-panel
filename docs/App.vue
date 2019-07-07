@@ -12,8 +12,8 @@
     >
       <side-menu />
     </sliding-panel>
-    <sliding-panel class="sp-sidebar" :state.sync="spState" :gravity="gravity" :scrim="true" collapsedOffset="1rem">
-      <side-menu />
+    <sliding-panel class="sp-sidebar" :state.sync="spState" :gravity="gravity" :scrim="true" collapsedOffset="2rem">
+      <side-menu class="side-menu" />
     </sliding-panel>
   </div>
 </template>
@@ -43,34 +43,33 @@ export default class App extends Vue {
 .page-root {
   margin-top: $navbar-height;
 }
+
 .side-menu {
   background: white;
+  height: 100%;
 }
 
 .pc-sidebar .sliding-panel {
-  top: $navbar-height;
+  filter: drop-shadow(0 0 16px rgba(0, 0, 0, 0.1));
+  top: 0;
+  bottom: 0;
+  background-size: 10%;
+  background: linear-gradient($primary, $secondly) no-repeat right;
+  .side-menu {
+    margin-top: $navbar-height;
+    margin-left: 5px;
+    transform: translateX(-5px);
+  }
 }
 
 .sp-sidebar .sliding-panel {
   top: 0;
   background: transparent;
-}
-
-.sp-sidebar .sliding-panel-slot,
-.pc-sidebar .sliding-panel-slot {
-  background: white;
-  top: 0;
-  height: 100vh;
-}
-
-.pc-sidebar .sliding-panel-slot {
-  filter: drop-shadow(0 0 16px rgba(0, 0, 0, 0.1));
-}
-
-.sp-sidebar .sliding-panel-slot {
-  border-right: transparent solid 1rem;
-  padding-left: 1em;
-  transform: translateX(-1rem);
+  .side-menu {
+    height: 100vh;
+    transform: translateX(-2rem);
+    margin-left: 2rem;
+  }
 }
 
 .sp-sidebar {
