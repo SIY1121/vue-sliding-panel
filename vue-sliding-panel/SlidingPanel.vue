@@ -1,4 +1,4 @@
-import { Gravity } from './types'
+import { Gravity } from './types' import { Gravity } from './types' import { Gravity } from './types'
 <template>
   <section>
     <transition name="fade">
@@ -61,11 +61,16 @@ export default class SlidingPanel extends Vue {
   @Prop({ default: true })
   public touchEnabled!: boolean
 
-  /////////temporary variables
+  /////////temporary variables for all direction sliding
   private oldOffset: number = 0
   private touchStartPosition: number = 0
   private draggingOffset: number = 0
   private oldState: PanelState = PanelState.HIDDEN
+  /////////
+
+  ///////// temporary variables for left or right sliding
+  private touchStartPositionY: number = 0
+  private innerScrollEnabled: boolean = false
   /////////
 
   mounted() {
@@ -143,10 +148,12 @@ export default class SlidingPanel extends Vue {
         break
       case Gravity.LEFT:
         this.touchStartPosition = e.targetTouches[0].screenX
+        this.touchStartPositionY = e.targetTouches[0].screenY
         this.oldOffset = target.offsetLeft
         break
       case Gravity.RIGHT:
         this.touchStartPosition = e.targetTouches[0].screenX
+        this.touchStartPositionY = e.targetTouches[0].screenY
         this.oldOffset = window.innerWidth - (target.offsetLeft + target.clientWidth)
     }
     this.draggingOffset = this.oldOffset
@@ -177,6 +184,8 @@ export default class SlidingPanel extends Vue {
       if (this.oldState === PanelState.EXPANDED && (direction === 'toCollapse' || target.scrollTop === 0))
         this.startSlide(e)
     }
+
+    // if (this.gravity === Gravity.RIGHT || this.gravity === Gravity.LEFT) {}
 
     switch (this.gravity) {
       case Gravity.TOP:
