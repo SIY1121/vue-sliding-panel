@@ -1,3 +1,4 @@
+import { Gravity } from './types'
 <template>
   <section>
     <transition name="fade">
@@ -12,7 +13,7 @@
     <section
       ref="panel"
       @touchstart="onTouchStart"
-      @touchmove.prevent="onTouchMove"
+      @touchmove="onTouchMove"
       @touchend="onTouchEnd"
       @click="onClick"
       :style="styles"
@@ -26,7 +27,7 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
-import { PanelState, Gravity } from './types'
+import { Gravity, PanelState } from './types'
 
 @Component
 export default class SlidingPanel extends Vue {
@@ -125,15 +126,12 @@ export default class SlidingPanel extends Vue {
     this.$emit('update:state', this.dismissedState)
   }
 
-  /**
-   * init temporary variables
-   */
-  onTouchStart(e: TouchEvent) {
-    if (!this.touchEnabled) return
+  startSlide(e: TouchEvent) {
+    const target = this.$refs.panel as HTMLElement
 
     this.oldState = this.state
+
     this.$emit('update:state', PanelState.DRAGGING)
-    const target = this.$refs.panel as HTMLElement
     switch (this.gravity) {
       case Gravity.TOP:
         this.touchStartPosition = e.targetTouches[0].screenY
@@ -155,10 +153,30 @@ export default class SlidingPanel extends Vue {
   }
 
   /**
+   * init temporary variables
+   */
+  onTouchStart(e: TouchEvent) {
+    if (!this.touchEnabled) return
+
+    this.startSlide(e)
+  }
+
+  /**
    * calculate and update position
    */
   onTouchMove(e: TouchEvent) {
     if (!this.touchEnabled) return
+
+    const target = this.$refs.panel as HTMLElement
+
+    if (this.gravity === Gravity.BOTTOM) {
+      const direction = (e.targetTouches[0].screenY - this.touchStartPosition) * -1 > 0 ? 'toExpand' : 'toCollapse'
+      // scroll inside if already expanded
+      if (this.oldState === PanelState.EXPANDED && (direction === 'toExpand' || target.scrollTop > 0)) return
+
+      if (this.oldState === PanelState.EXPANDED && (direction === 'toCollapse' || target.scrollTop === 0))
+        this.startSlide(e)
+    }
 
     switch (this.gravity) {
       case Gravity.TOP:
@@ -173,6 +191,8 @@ export default class SlidingPanel extends Vue {
       case Gravity.RIGHT:
         this.draggingOffset = Math.min(this.oldOffset + (e.targetTouches[0].screenX - this.touchStartPosition) * -1, 0)
     }
+
+    e.preventDefault()
   }
 
   /**
@@ -239,6 +259,7 @@ export default class SlidingPanel extends Vue {
         }
         break
       case PanelState.EXPANDED:
+      case PanelState.DRAGGING:
         if (
           this.anchorEnabled &&
           offsetInPixel * (this.anchorPosition + (1 - this.anchorPosition) * 0.9) < draggingOffsetEnd
@@ -274,7 +295,7 @@ export default class SlidingPanel extends Vue {
 .sliding-panel {
   position: fixed;
   &.transition {
-    transition: all 0.3s cubic-bezier(0, 0, 0.05, 1) 0s;
+    transition: all 0.3s cubic-bezier(0, 0, 0.1, 1) 0s;
   }
 }
 

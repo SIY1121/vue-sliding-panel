@@ -29,6 +29,36 @@
         <i class="mdi mdi-wechat" />
         <i class="mdi mdi-email" />
       </div>
+      <div class="container">
+        <i class="mdi mdi-slack" />
+        <i class="mdi mdi-discord" />
+        <i class="mdi mdi-reddit" />
+        <i class="mdi mdi-facebook-messenger" />
+        <i class="mdi mdi-tumblr" />
+        <i class="mdi mdi-pinterest" />
+        <i class="mdi mdi-wechat" />
+        <i class="mdi mdi-email" />
+      </div>
+      <div class="container">
+        <i class="mdi mdi-slack" />
+        <i class="mdi mdi-discord" />
+        <i class="mdi mdi-reddit" />
+        <i class="mdi mdi-facebook-messenger" />
+        <i class="mdi mdi-tumblr" />
+        <i class="mdi mdi-pinterest" />
+        <i class="mdi mdi-wechat" />
+        <i class="mdi mdi-email" />
+      </div>
+      <div class="container">
+        <i class="mdi mdi-slack" />
+        <i class="mdi mdi-discord" />
+        <i class="mdi mdi-reddit" />
+        <i class="mdi mdi-facebook-messenger" />
+        <i class="mdi mdi-tumblr" />
+        <i class="mdi mdi-pinterest" />
+        <i class="mdi mdi-wechat" />
+        <i class="mdi mdi-email" />
+      </div>
     </sliding-panel>
   </section>
 </template>
@@ -53,6 +83,7 @@ export default class ShareComponent extends Vue {
   width: 100%;
   left: 0;
   padding: 1rem;
+  overflow-y: scroll;
   .title {
     font-size: 1.5rem;
   }
