@@ -1,7 +1,6 @@
 <template>
   <div id="app">
     <navbar />
-    <router-view style="margin-top:5rem" />
     <sliding-panel
       class="pc-sidebar"
       :state.sync="pcState"
@@ -10,11 +9,12 @@
       collapsedOffset="1em"
       offset="350px"
     >
-      <side-menu />
+      <side-menu @click.native.stop="" />
     </sliding-panel>
     <sliding-panel class="sp-sidebar" :state.sync="spState" :gravity="gravity" :scrim="true" collapsedOffset="2rem">
-      <side-menu class="side-menu" />
+      <side-menu class="side-menu" @close="closesp" />
     </sliding-panel>
+    <router-view style="margin-top:5rem" />
   </div>
 </template>
 <script lang="ts">
@@ -31,6 +31,11 @@ export default class App extends Vue {
   gravity: Gravity = Gravity.LEFT
   pcState: PanelState = PanelState.HIDDEN
   spState: PanelState = PanelState.HIDDEN
+
+  closesp() {
+    this.spState = PanelState.COLLAPSED
+  }
+
   @Watch('$route')
   onRouteChange(to: Route, from: Route) {
     this.pcState = to.name === 'home' ? PanelState.HIDDEN : PanelState.EXPANDED
@@ -62,13 +67,19 @@ export default class App extends Vue {
   }
 }
 
-.sp-sidebar .sliding-panel {
-  top: 0;
-  background: transparent;
-  .side-menu {
-    height: 100vh;
-    transform: translateX(-2rem);
-    margin-left: 2rem;
+.sp-sidebar {
+  .sliding-panel {
+    top: 0;
+    background: transparent;
+    z-index: 10;
+    .side-menu {
+      height: 100vh;
+      transform: translateX(-2rem);
+      margin-left: 2rem;
+    }
+  }
+  .scrim {
+    z-index: 9;
   }
 }
 

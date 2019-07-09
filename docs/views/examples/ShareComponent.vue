@@ -80,10 +80,10 @@ export default class ShareComponent extends Vue {
 <style lang="scss">
 .share .sliding-panel {
   background: white;
-  width: 100%;
   left: 0;
-  padding: 1rem;
   overflow-y: scroll;
+  padding: 1rem;
+  width: 100%;
   .title {
     font-size: 1.5rem;
   }

@@ -26,10 +26,10 @@
       <div class="section-name">
         Showcase
       </div>
-      <router-link to="/examples/ShareComponent" class="item">
+      <router-link to="/examples/ShareComponent" class="item" @click.native.stop="close">
         Share component
       </router-link>
-      <router-link to="/examples/SideBar" class="item">
+      <router-link to="/examples/SideBar" class="item" @click.native.stop="close">
         SideBar
       </router-link>
     </section>
@@ -39,7 +39,11 @@
 <script lang="ts">
 import { Component, Vue, Watch } from 'vue-property-decorator'
 @Component
-export default class SideMenu extends Vue {}
+export default class SideMenu extends Vue {
+  close() {
+    this.$emit('close')
+  }
+}
 </script>
 
 <style lang="scss" scoped>
