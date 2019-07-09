@@ -179,13 +179,19 @@ export default class SlidingPanel extends Vue {
     if (this.gravity === Gravity.BOTTOM) {
       const direction = (e.targetTouches[0].screenY - this.touchStartPosition) * -1 > 0 ? 'toExpand' : 'toCollapse'
       // scroll inside if already expanded
-      if (this.oldState === PanelState.EXPANDED && (direction === 'toExpand' || target.scrollTop > 0)) return
+      if (this.oldState === PanelState.EXPANDED && (direction === 'toExpand' || target.scrollTop > 0)) return // cancel sliding
 
       if (this.oldState === PanelState.EXPANDED && (direction === 'toCollapse' || target.scrollTop === 0))
         this.startSlide(e)
     }
 
-    // if (this.gravity === Gravity.RIGHT || this.gravity === Gravity.LEFT) {}
+    if (this.gravity === Gravity.RIGHT || this.gravity === Gravity.LEFT) {
+      if (
+        Math.abs(e.targetTouches[0].screenY - this.touchStartPositionY) >
+        Math.abs(e.targetTouches[0].screenX - this.touchStartPosition)
+      )
+        return // cancel sliding
+    }
 
     switch (this.gravity) {
       case Gravity.TOP:
@@ -201,7 +207,7 @@ export default class SlidingPanel extends Vue {
         this.draggingOffset = Math.min(this.oldOffset + (e.targetTouches[0].screenX - this.touchStartPosition) * -1, 0)
     }
 
-    e.preventDefault()
+    if (e.cancelable) e.preventDefault()
   }
 
   /**
