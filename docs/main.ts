@@ -14,7 +14,7 @@ const javascript = require('highlight.js/lib/languages/javascript')
 const vue = require('vue-highlight.js/lib/languages/vue')
 const ts = require('highlight.js/lib/languages/typescript')
 const shell = require('highlight.js/lib/languages/shell')
-import 'highlight.js/styles/default.css'
+import 'highlight.js/styles/a11y-dark.css'
 
 Vue.use(VueHighlightJS, {
   // Register only languages that you want

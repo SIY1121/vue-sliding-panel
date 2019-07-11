@@ -34,7 +34,7 @@ export default class Home extends Vue {}
 .hero {
   height: 70vh;
   width: 100%;
-  // background-image: url('../assets/wave.svg'), linear-gradient(90deg, #5433ff, #20bdff, #a5fecd);
+  background-image: url('../assets/wave.svg'), linear-gradient(90deg, #5433ff, #20bdff, #a5fecd);
   background-repeat: no-repeat, repeat;
   background-size: 120%, cover;
   background-position: 5% 101%, center;

@@ -37,10 +37,10 @@ export default class SlidingPanel extends Vue {
   public gravity!: Gravity
 
   @Prop({ default: '4rem' })
-  public collapsedOffset!: any
+  public collapsedOffset!: string
 
   @Prop({ default: '0' })
-  public offset!: any
+  public offset!: string
 
   @Prop({ default: true })
   public scrim!: boolean
@@ -73,7 +73,7 @@ export default class SlidingPanel extends Vue {
   /////////
 
   mounted() {
-    if (this.offset == 0)
+    if (this.offset === '0')
       switch (this.gravity) {
         case Gravity.TOP:
         case Gravity.BOTTOM:

@@ -30,6 +30,11 @@ $navbar-height: 5rem;
 html,body {
   font-family: 'Noto Sans JP', sans-serif;
   color: $text-color;
+  line-height: 1.5rem;
+}
+
+p {
+  margin: 1rem 0;
 }
 
 @mixin container {
@@ -70,13 +75,35 @@ html,body {
 }
 
 .document-root {
-  @include pc {
+  max-width: 1024px;
+  @media (max-width: 1724px) {
     margin-left: 350px;
   }
-  padding: 1rem;
+  @media (min-width: 1725px) {
+    margin:0 auto;
+  }
+  @include tab {
+    margin:0 auto;
+    width: $tab;
+  }
+  @include sp {
+    width: initial;
+    padding: 1rem;
+  }
+  padding: 3rem 1rem;
 }
 
 .title {
-  font-size: 2rem;
+  font-size: 1.5rem;
   margin-bottom: 1rem;
+}
+
+.flex {
+  display: flex;
+  @include sp {
+    flex-direction: column;
+  }
+  img {
+    width: 100%;
+  }
 }

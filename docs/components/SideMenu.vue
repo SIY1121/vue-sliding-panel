@@ -4,12 +4,9 @@
       <div class="section-name">
         Get Started
       </div>
-      <div class="item">
+      <router-link to="/start" class="item" @click.native.stop="close">
         Quick Start
-      </div>
-      <div class="item">
-        Contributing
-      </div>
+      </router-link>
     </section>
     <section>
       <div class="section-name">
