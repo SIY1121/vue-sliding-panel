@@ -1,4 +1,3 @@
-import { PanelState } from '../../vue-sliding-panel/types'
 <template>
   <div class="home">
     <sliding-panel :state.sync="state">

@@ -1,4 +1,3 @@
-import { Gravity } from './types' import { Gravity } from './types' import { Gravity } from './types'
 <template>
   <section>
     <transition name="fade">

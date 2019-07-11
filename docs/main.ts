@@ -13,7 +13,7 @@ const css = require('highlight.js/lib/languages/css')
 const javascript = require('highlight.js/lib/languages/javascript')
 const vue = require('vue-highlight.js/lib/languages/vue')
 const ts = require('highlight.js/lib/languages/typescript')
-
+const shell = require('highlight.js/lib/languages/shell')
 import 'highlight.js/styles/default.css'
 
 Vue.use(VueHighlightJS, {
@@ -22,7 +22,8 @@ Vue.use(VueHighlightJS, {
     css,
     javascript,
     vue,
-    ts
+    ts,
+    shell
   }
 })
 
