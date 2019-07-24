@@ -30,7 +30,7 @@ import { Gravity, PanelState } from './types'
 
 @Component
 export default class SlidingPanel extends Vue {
-  @Prop({ required: true })
+  @Prop()
   public state!: PanelState
 
   @Prop({ default: Gravity.BOTTOM })

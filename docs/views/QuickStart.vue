@@ -88,6 +88,17 @@
         </div>
       </div>
     </div>
+    <p>
+      You can write PanelState in TypeScript like
+    </p>
+    <highlight-code lang="ts">
+      import { PanelState } from 'vue-sliding-panel'
+      PanelState.HIDDEN
+      PanelState.COLLAPSED
+      PanelState.ANCHORED
+      PanelState.EXPANDED
+    </highlight-code>
+
     <h1 class="title">Gravity</h1>
       <div class="flex">
         <div>
@@ -115,6 +126,16 @@
           </div>
         </div>
     </div>
+    <p>
+      You can write PanelState in TypeScript like
+    </p>
+    <highlight-code lang="ts">
+      import { Gravity } from 'vue-sliding-panel'
+      Gravity.TOP
+      Gravity.RIGHT
+      Gravity.BOTTOM
+      Gravity.LEFT
+    </highlight-code>
   </section>
 </template>
 

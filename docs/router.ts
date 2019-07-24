@@ -30,6 +30,16 @@ export default new Router({
       path: '/examples/SideBar',
       name: 'sidebar',
       component: () => import('./views/examples/SideBar.vue')
+    },
+    {
+      path: '/props',
+      name: 'props',
+      component: () => import('./views/Props.vue')
+    },
+    {
+      path: '/event',
+      name: 'event',
+      component: () => import('./views/EventHandling.vue')
     }
   ]
 })

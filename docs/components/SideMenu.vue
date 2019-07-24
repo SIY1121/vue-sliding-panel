@@ -12,12 +12,12 @@
       <div class="section-name">
         Document
       </div>
-      <div class="item">
+      <router-link to="/props" class="item" @click.native.stop="close">
         Props
-      </div>
-      <div class="item">
-        Styling
-      </div>
+      </router-link>
+      <router-link to="/event" class="item" @click.native.stop="close">
+        EventHandling
+      </router-link>
     </section>
     <section>
       <div class="section-name">
