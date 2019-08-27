@@ -56,6 +56,7 @@ export default class Home extends Vue {}
     flex-direction: column;
     align-items: center;
     color: white;
+    padding: 1rem;
     .logo {
       filter: drop-shadow(0 0 16px rgba(0, 0, 0, 0.1));
       width: 150px;
@@ -64,12 +65,14 @@ export default class Home extends Vue {}
       font-size: 2rem;
       font-weight: bold;
       text-align: center;
+      line-height: 1.2em;
     }
     .name {
       text-align: center;
     }
     .alert {
       margin: 1rem 0;
+      text-align: center;
     }
     .links {
       height: 4rem;
