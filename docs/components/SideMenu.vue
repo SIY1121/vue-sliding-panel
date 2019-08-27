@@ -29,6 +29,9 @@
       <router-link to="/examples/SideBar" class="item" @click.native.stop="close">
         SideBar
       </router-link>
+      <router-link to="/examples/Playground" class="item" @click.native.stop="close">
+        Playground
+      </router-link>
     </section>
   </section>
 </template>

@@ -9,12 +9,20 @@
         <div class="name">
           Vue Sliding Panel
         </div>
+        <div class="alert">
+          Use touch screen or chrome devtools for a better experience
+        </div>
+        <div>
+          <a href="https://badge.fury.io/js/vue-sliding-panel">
+            <img src="https://badge.fury.io/js/vue-sliding-panel.svg" alt="npm version" height="18" />
+          </a>
+        </div>
         <div class="links">
           <router-link class="button primary" to="./start">
             <i class="mdi mdi-arrow-right-thick" />
             Get Started
           </router-link>
-          <router-link class="button secondly" to="./about">
+          <router-link class="button secondly" to="./examples/ShareComponent">
             <i class="mdi mdi-cube-outline" />
             See Showcase
           </router-link>
@@ -32,7 +40,7 @@ export default class Home extends Vue {}
 <style lang="scss" scoped>
 @import '@/assets/main.scss';
 .hero {
-  height: 70vh;
+  height: 80vh;
   width: 100%;
   background-image: url('../assets/wave.svg'), linear-gradient(90deg, #5433ff, #20bdff, #a5fecd);
   background-repeat: no-repeat, repeat;
@@ -57,6 +65,9 @@ export default class Home extends Vue {}
       text-align: center;
     }
     .name {
+      text-align: center;
+    }
+    .alert {
       margin: 1rem 0;
     }
     .links {

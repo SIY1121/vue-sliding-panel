@@ -3,6 +3,10 @@
   "version": "0.0.42",
   "private": false,
   "author": "SIY1121",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SIY1121/vue-sliding-panel.git"
+  },
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",

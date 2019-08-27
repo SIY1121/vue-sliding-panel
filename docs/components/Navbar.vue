@@ -1,12 +1,15 @@
 <template>
   <nav>
     <section class="container">
+      <i class="mdi mdi-menu menu" @click="$emit('menu')" />
       <router-link to="/" class="brand">
         <img class="logo" src="@/assets/logo.svg" alt="logo" />
         Vue Sliding Panel
       </router-link>
       <div class="social">
-        <i class="mdi mdi-github-circle mdi-48px" />
+        <a target="_blank" href="https://github.com/SIY1121/vue-sliding-panel"
+          ><i class="mdi mdi-github-circle mdi-48px"
+        /></a>
       </div>
     </section>
   </nav>
@@ -53,6 +56,18 @@ nav {
 }
 .logo {
   vertical-align: middle;
-  height: 3em;
+  height: 3rem;
+}
+.social {
+  i {
+    color: $text-color;
+    line-height: 3rem;
+  }
+  height: 3rem;
+}
+.menu {
+  @include pc {
+    display: none;
+  }
 }
 </style>

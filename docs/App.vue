@@ -1,6 +1,7 @@
+import { PanelState } from '../vue-sliding-panel' import { PanelState } from '../vue-sliding-panel'
 <template>
   <div id="app">
-    <navbar />
+    <navbar @menu="onHamburgerClick" />
     <sliding-panel
       class="pc-sidebar"
       :state.sync="pcState"
@@ -11,7 +12,7 @@
     >
       <side-menu @click.native.stop="" />
     </sliding-panel>
-    <sliding-panel class="sp-sidebar" :state.sync="spState" :gravity="gravity" :scrim="true" collapsedOffset="2rem">
+    <sliding-panel class="sp-sidebar" :state.sync="spState" :gravity="gravity" :scrim="true" collapsedOffset="1rem">
       <side-menu class="side-menu" @close="closesp" />
     </sliding-panel>
     <router-view style="margin-top:5rem" />
@@ -34,6 +35,10 @@ export default class App extends Vue {
 
   closesp() {
     this.spState = PanelState.COLLAPSED
+  }
+
+  onHamburgerClick() {
+    this.spState = PanelState.EXPANDED
   }
 
   @Watch('$route')
@@ -74,8 +79,8 @@ export default class App extends Vue {
     z-index: 10;
     .side-menu {
       height: 100vh;
-      transform: translateX(-2rem);
-      margin-left: 2rem;
+      transform: translateX(-1rem);
+      margin-left: 1rem;
     }
   }
   .scrim {

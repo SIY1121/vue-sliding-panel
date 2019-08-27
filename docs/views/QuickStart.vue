@@ -56,7 +56,7 @@
       So you have to apply style for <highlight-code  inline>.sliding-panel</highlight-code>.
     </p>
     <h1 class="title">Panel state</h1>
-    <div class="flex">
+    <div class="grid">
       <div>
         <img src="@/assets/hidden.png" alt="hidden">
         <div>
@@ -64,25 +64,19 @@
         </div>
       </div>
       <div>
-        <img src="@/assets/hidden.png" alt="hidden">
+        <img src="@/assets/collapsed.png" alt="hidden">
         <div>
           COLLAPSED
         </div>
       </div>
       <div>
-        <img src="@/assets/hidden.png" alt="hidden">
-        <div>
-          DRAGGING
-        </div>
-      </div>
-      <div>
-        <img src="@/assets/hidden.png" alt="hidden">
+        <img src="@/assets/anchored.png" alt="hidden">
         <div>
           ANCHORED(disabled by default)
         </div>
       </div>
       <div>
-        <img src="@/assets/hidden.png" alt="hidden">
+        <img src="@/assets/expanded.png" alt="hidden">
         <div>
           EXPANDED
         </div>
@@ -100,27 +94,27 @@
     </highlight-code>
 
     <h1 class="title">Gravity</h1>
-      <div class="flex">
+      <div class="grid">
         <div>
-          <img src="@/assets/hidden.png" alt="hidden">
+          <img src="@/assets/expanded.png" alt="hidden">
           <div>
             BOTTOM
           </div>
         </div>
         <div>
-          <img src="@/assets/hidden.png" alt="hidden">
+          <img src="@/assets/right.png" alt="hidden">
           <div>
             RIGHT
           </div>
         </div>
         <div>
-          <img src="@/assets/hidden.png" alt="hidden">
+          <img src="@/assets/left.png" alt="hidden">
           <div>
             LEFT
           </div>
         </div>
         <div>
-          <img src="@/assets/hidden.png" alt="hidden">
+          <img src="@/assets/top.png" alt="hidden">
           <div>
             TOP
           </div>
