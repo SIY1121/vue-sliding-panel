@@ -60,6 +60,9 @@ export default class SlidingPanel extends Vue {
   @Prop({ default: true })
   public touchEnabled!: boolean
 
+  @Prop({ default: false })
+  public mouseFallbackEnabled!: boolean
+
   /////////temporary variables for all direction sliding
   private oldOffset: number = 0
   private touchStartPosition: number = 0
@@ -295,7 +298,7 @@ export default class SlidingPanel extends Vue {
   }
 
   onClick() {
-    if (!this.touchEnabled) return
+    if (!this.touchEnabled || !this.mouseFallbackEnabled) return
 
     if (this.state === PanelState.COLLAPSED)
       this.$emit('update:state', this.anchorEnabled ? PanelState.ANCHORED : PanelState.EXPANDED)
