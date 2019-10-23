@@ -63,6 +63,9 @@ export default class SlidingPanel extends Vue {
   @Prop({ default: false })
   public mouseFallbackEnabled!: boolean
 
+  @Prop({ default: false })
+  public disabled!: boolean
+
   /////////temporary variables for all direction sliding
   private oldOffset: number = 0
   private touchStartPosition: number = 0
@@ -92,6 +95,8 @@ export default class SlidingPanel extends Vue {
    * generate style based on the current state
    */
   get styles(): any {
+    if (this.disabled) return {}
+
     const styleObject: any = {}
     const anchor: string = this.gravity //'top' 'right' 'bottom' or 'left'
 
@@ -126,7 +131,7 @@ export default class SlidingPanel extends Vue {
   }
 
   get isScrimVisible() {
-    return this.scrim && !(this.state === PanelState.HIDDEN || this.state === PanelState.COLLAPSED)
+    return this.scrim && !(this.state === PanelState.HIDDEN || this.state === PanelState.COLLAPSED) && !this.disabled
   }
 
   dismiss() {
